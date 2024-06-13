@@ -1,0 +1,117 @@
+body{
+    background: #8c52ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#weather-container{
+    background-color: rgba(255,255,255,0.3);
+    max-width: 400px;
+    padding: 30px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(255,255,255,0.1);
+    backdrop-filter: blur;
+}
+
+h2{
+    color: white;
+    margin: 15px;
+    font-weight: bolder;
+}
+
+input{
+    width: calc(100% - 16px);
+    padding: 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    margin-top: 20px;
+}
+
+input::placeholder{
+    color: #8c52ff;
+    opacity: 1;
+}
+
+input:focus {
+    outline: none; 
+    border: 1px solid #8c52ff; 
+    background-color: #fff; 
+    box-shadow: 0 0 5px rgba(140, 82, 255, 0.5); 
+    margin-top: 18px; 
+}
+
+
+button{
+    color: white;
+    background-color: #deb5f0;
+    margin-top: 20px;
+    border: none;
+    padding: 9px;
+    border-radius: 10px;
+    width: 100px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+button:hover{
+    background-color: #8b48d7;
+}
+
+#temp p{
+    font-size: 60px;
+    margin-top: -25px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+#weather-info{
+    padding-top: 0;
+    font-size: 20px;
+    color: white;
+}
+
+#weather-icon{
+    width: 200px;
+    height:200px;
+    display: none;
+    margin: 0 auto 10px;
+    margin-bottom: 0;
+}
+
+#hourly-forecast{
+    margin-top: 50px;
+    display:flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+#hourly-forecast::-webkit-scrollbar {
+    display: none;
+}
+
+.hourly-item{
+    width: 80px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 10px;
+    color: white;
+    flex: 0 0 auto;
+}
+
+.hourly-item img{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
