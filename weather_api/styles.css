@@ -66,6 +66,24 @@ button:hover{
     background-color: #8b48d7;
 }
 
+#get-location-btn{
+    color: white;
+    background-color: #deb5f0;
+    margin-top: 20px;
+    border: none;
+    padding: 9px;
+    border-radius: 10px;
+    width: 200px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-left: 3px;
+}
+
+#get-location-btn:hover{
+    background-color: #8b48d7;
+}
+
+
 #temp p{
     font-size: 60px;
     margin-top: -25px;

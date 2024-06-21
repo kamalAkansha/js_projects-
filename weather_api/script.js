@@ -1,5 +1,7 @@
+const apiKey = '11b9ef54973ea81c2cb40ce110c1a9a9';
+
 function getWeather(){
-    const apiKey = '11b9ef54973ea81c2cb40ce110c1a9a9';
+  
     const city = document.getElementById('city').value;
 
     if(!city){
@@ -10,29 +12,23 @@ function getWeather(){
     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
 
-    fetch(currentWeatherUrl)
-      .then(response => response.json())
-      .then(data=>{
-        displayWeather(data);
-      })
+    fetchWeatherData(currentWeatherUrl, displayWeather, 'current weather');
+    fetchWeatherData(forecastUrl, data=>displayHourlyForecast(data.list) , 'hourly forecast');
+}
 
-      .catch(error => {
-        console.error('Error fetching current weather data:', error);
-        alert('Error fetching current weather data. Please try again.');
-      });
+function fetchWeatherData(url, callback, errorContext){
+    fetch(url)
+    .then(response => response.json())
+    .then(data => callback(data))
 
-    fetch(forecastUrl)
-      .then(response=>response.json())
-      .then(data=>{
-        displayHourlyForecast(data.list);
-      })
+    .catch(error => {
+      console.error(`Error fetching ${errorContext} data:`, error);
+      alert(`Error fetching ${errorContext} data. Please try again.`);
+  });
 
-      .catch(error =>{
-        console.error('Error fetching hourly forecast data:', error);
-        alert('Error fetching hourly forecast data. Please try again.');
-      });
-} 
-
+}
+    
+    
 function displayWeather(data){
     const tempInfoDiv = document.getElementById('temp');
     const weatherInfoDiv = document.getElementById('weather-info');
@@ -101,4 +97,43 @@ function showImage() {
         const weatherIcon = document.getElementById('weather-icon');
         weatherIcon.style.display = 'block';
 
+}
+
+function getLocation(){
+
+    const storedLat = localStorage.getItem('latitude');
+    const storedLon = localStorage.getItem('longitude');
+
+    if(storedLat && storedLon){
+      const lat = storedLat;
+      const lon = storedLon;
+  
+      const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+      const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  
+      fetchWeatherData(currentWeatherUrl, displayWeather, 'current weather');
+      fetchWeatherData(forecastUrl, data => displayHourlyForecast(data.list), 'hourly forecast');
+    } else {
+
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(position =>{
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          localStorage.setItem('latitude', lat);
+          localStorage.setItem('longitude', lon);
+
+          const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+          const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+          fetchWeatherData(currentWeatherUrl, displayWeather, 'current weather');
+          fetchWeatherData(forecastUrl, data => displayHourlyForecast(data.list), 'hourly forecast');
+      }, error => {
+          console.error('Error getting geolocation:', error);
+          alert('Error getting geolocation. Please try again.');
+        });
+      } else {
+        alert('Geolocation is not supported by this browser.');
+      }
+    }
 }
